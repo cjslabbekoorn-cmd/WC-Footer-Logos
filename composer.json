@@ -1,0 +1,18 @@
+{
+  "name": "positie1/wc-footer-logos",
+  "description": "WooCommerce footer logos with Elementor widget",
+  "type": "wordpress-plugin",
+  "license": "proprietary",
+  "autoload": {
+    "psr-4": {
+      "WCFL\\": "includes/"
+    }
+  },
+  "require": {},
+  "authors": [
+    {
+      "name": "Cees-Jan Slabbekoorn",
+      "homepage": "https://positie1.nl"
+    }
+  ]
+}
