@@ -11,6 +11,11 @@
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
   },
+  "config": {
+  "allow-plugins": {
+    "dealerdirect/phpcodesniffer-composer-installer": true
+  }
+},
   "scripts": {
     "lint": "php -l wc-footer-logos.php && find includes -name '*.php' -print0 | xargs -0 -n1 php -l",
     "phpcs": "phpcs",
