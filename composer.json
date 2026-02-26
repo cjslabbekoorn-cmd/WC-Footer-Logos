@@ -1,18 +1,19 @@
 {
   "name": "positie1/wc-footer-logos",
-  "description": "WooCommerce footer logos with Elementor widget",
+  "description": "WooCommerce payment logos footer widget + shortcode (Elementor).",
   "type": "wordpress-plugin",
-  "license": "proprietary",
-  "autoload": {
-    "psr-4": {
-      "WCFL\\": "includes/"
-    }
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=7.4"
   },
-  "require": {},
-  "authors": [
-    {
-      "name": "Cees-Jan Slabbekoorn",
-      "homepage": "https://positie1.nl"
-    }
-  ]
+  "require-dev": {
+    "wp-coding-standards/wpcs": "^3.0",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+  },
+  "scripts": {
+    "lint": "php -l wc-footer-logos.php && find includes -name '*.php' -print0 | xargs -0 -n1 php -l",
+    "phpcs": "phpcs",
+    "phpcbf": "phpcbf"
+  }
 }

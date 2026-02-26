@@ -2,28 +2,32 @@
 
 WooCommerce betaalmethoden (payment gateways) logo's via shortcode + Elementor widget.
 
-## Features (v1.0.3)
-- Shortcode: `[wc_footer_logos]` (payment icons + optioneel provider label)
-- Elementor widget: **WC Footer Logos**
-- Optioneel: provider label (auto/manual)
-- Optioneel: handmatige extra logo's (Elementor repeater)
-- Instelbaar aantal kolommen via CSS grid
-- Lazy-load (data-src) voor handmatige logo's
-- **GitHub Releases updater** (WordPress ziet updates vanuit GitHub)
+## Requirements
+- WordPress: 
+- PHP: 7.4+
+- WooCommerce: recommended (required for payment gateway icons)
+- Elementor: optional (required only for the Elementor widget)
 
-## Belangrijk voor updates via GitHub
-1. Maak een release met tag `v1.0.3` (of hoger).
-2. Upload de plugin-zip als **release asset**, bij voorkeur met naam `wc-footer-logos-<versie>.zip`.
-3. In WP → Plugins zie je dan een update melding zodra er een hogere versie is.
+## License
+GPL-2.0-or-later. See `LICENSE`.
 
-Repo configuratie staat in `includes/class-wcfl-plugin.php` (owner/repo).
+## Disclaimer
+This plugin is provided “as is”, without warranty of any kind. You use it at your own risk.
+Positie1 / Cees-Jan Slabbekoorn is not liable for any damages arising from the use of this plugin.
 
-## Shortcode voorbeelden
-Payment icons:
-`[wc_footer_logos]`
+## Changelog
+- 1.4.2: CI/CD toegevoegd (GitHub Actions matrix + PHPCS) + automatische ZIP build & release asset op tags.
+- 1.4.1: Admin tool toegevoegd om cache te legen (nonce + capability) + uninstall cleanup (transients/options).
+- 1.4.0: Foundation hardening: license + security docs; minimum version guards; safer bootstrapping.
 
-Payment + provider label:
-`[wc_footer_logos show_provider="yes" provider_mode="auto" columns="6"]`
+## Development
+- `composer install`
+- `composer lint`
+- `composer phpcs`
+- Tag een release (`1.4.2`) om automatisch een ZIP asset te laten bouwen en attachen.
 
-Filter payment gateways op provider:
-`[wc_footer_logos provider_filter="mollie"]`
+## Admin tools
+Ga naar **Tools → WC Footer Logos** om de WCFL cache te legen.
+
+## Debug
+(alleen admins) toggle **Debug (admin only)** en zoek in de DOM naar `data-wcfl-debug`.

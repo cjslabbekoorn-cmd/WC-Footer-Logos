@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ruleset name="WC Footer Logos">
+  <description>PHPCS ruleset for WC Footer Logos.</description>
+
+  <arg name="basepath" value="."/>
+  <arg name="colors"/>
+  <arg name="extensions" value="php"/>
+  <arg name="parallel" value="4"/>
+  <arg value="sp"/>
+
+  <config name="installed_paths" value="vendor/wp-coding-standards/wpcs,vendor/phpcompatibility/phpcompatibility-wp"/>
+  <config name="testVersion" value="7.4-"/>
+  <config name="minimum_supported_wp_version" value="6.0"/>
+
+  <rule ref="WordPress"/>
+  <rule ref="WordPress-Core"/>
+  <rule ref="WordPress-Docs"/>
+
+  <exclude-pattern>vendor/*</exclude-pattern>
+  <exclude-pattern>node_modules/*</exclude-pattern>
+
+  <file>wc-footer-logos.php</file>
+  <file>includes</file>
+</ruleset>
