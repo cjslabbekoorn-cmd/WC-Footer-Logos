@@ -4,7 +4,10 @@ set -euo pipefail
 PLUGIN_SLUG="wc-footer-logos"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DIST_DIR="${ROOT_DIR}/dist"
-VERSION="$(php -r "preg_match('/Version:\s*([0-9.]+)/', file_get_contents('${ROOT_DIR}/wc-footer-logos.php'), $m); echo $m[1];")"
+VERSION="$(php -r '
+$txt = file_get_contents("'"$ROOT_DIR"'/wc-footer-logos.php");
+if (preg_match("/Version:\s*([0-9.]+)/", $txt, $matches)) { echo $matches[1]; }
+')"
 
 mkdir -p "${DIST_DIR}"
 ZIP="${DIST_DIR}/${PLUGIN_SLUG}-${VERSION}.zip"
