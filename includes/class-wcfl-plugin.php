@@ -3,6 +3,8 @@ if (!defined('ABSPATH')) exit;
 
 final class WCFL_Plugin {
     private static $instance = null;
+    private static $did_enqueue = false;
+    private static $did_enqueue_lazy = false;
 
     public static function instance() {
         if (self::$instance === null) self::$instance = new self();
@@ -11,11 +13,14 @@ final class WCFL_Plugin {
 
     private function __construct() {
         require_once WCFL_PATH . 'includes/class-wcfl-provider.php';
+        require_once WCFL_PATH . 'includes/cache.php';
         require_once WCFL_PATH . 'includes/shortcode.php';
         require_once WCFL_PATH . 'includes/class-wcfl-updater.php';
 
         add_action('wp_enqueue_scripts', [$this, 'register_assets']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_assets']);
+
+        // Cache bust wanneer WC payment instellingen wijzigen
+        add_action('updated_option', [$this, 'maybe_bust_cache'], 10, 3);
 
         // Elementor widget laden (als Elementor actief is)
         add_action('elementor/widgets/register', [$this, 'register_elementor_widget']);
@@ -23,6 +28,7 @@ final class WCFL_Plugin {
 
         // GitHub updater (pas owner/repo aan naar jouw repo)
         if (is_admin()) {
+            require_once WCFL_PATH . 'includes/admin.php';
             new WCFL_GitHub_Updater([
                 'plugin_file'     => WCFL_PATH . 'wc-footer-logos.php',
                 'plugin_slug'     => 'wc-footer-logos',
@@ -40,9 +46,31 @@ final class WCFL_Plugin {
         wp_register_script('wcfl-lazy', WCFL_URL . 'assets/js/wcfl-lazy.js', [], WCFL_VERSION, true);
     }
 
-    public function enqueue_assets() {
-        wp_enqueue_style('wcfl');
-        // Script wordt conditioneel ge-enqueued door shortcode/widget wanneer lazy = yes
+
+    /**
+     * Enqueue assets alleen wanneer shortcode/widget daadwerkelijk rendert.
+     */
+    public static function enqueue_frontend_assets(bool $needs_lazy = false): void {
+        if (!self::$did_enqueue) {
+            wp_enqueue_style('wcfl');
+            self::$did_enqueue = true;
+        }
+        if ($needs_lazy && !self::$did_enqueue_lazy) {
+            wp_enqueue_script('wcfl-lazy');
+            self::$did_enqueue_lazy = true;
+        }
+    }
+
+    /**
+     * Bust cache bij relevante WooCommerce gateway settings updates.
+     */
+    public function maybe_bust_cache($option_name, $old_value, $value): void {
+        if (!is_string($option_name)) return;
+        // WooCommerce gateway settings options volgen vaak: woocommerce_{gateway_id}_settings
+        if (strpos($option_name, 'woocommerce_') === 0 && substr($option_name, -9) === '_settings') {
+            $bust = (int) get_option('wcfl_cache_bust', 1);
+            update_option('wcfl_cache_bust', $bust + 1, false);
+        }
     }
 
     public function register_elementor_widget($widgets_manager) {
