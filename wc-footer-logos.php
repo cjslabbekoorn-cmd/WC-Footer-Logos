@@ -13,6 +13,14 @@
  * Text Domain: wc-footer-logos
  */
 
+define('WCFL_GH_OWNER', 'cjslabbekoorn-cmd');
+define('WCFL_GH_REPO',  'WC-Footer-Logos');
+define('WCFL_GH_BRANCH', 'main'); // niet essentieel, maar handig
+define('WCFL_PLUGIN_FILE', __FILE__);
+define('WCFL_PLUGIN_SLUG', 'wc-footer-logos'); // folder slug
+define('WCFL_PLUGIN_BASENAME', plugin_basename(__FILE__));
+define('WCFL_GH_API_BASE', 'https://api.github.com');
+
 if (!defined('ABSPATH')) exit;
 
 define('WCFL_PATH', plugin_dir_path(__FILE__));
