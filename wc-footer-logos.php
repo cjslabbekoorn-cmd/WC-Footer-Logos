@@ -8,7 +8,7 @@
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Author URI: https://positie1.nl
- * Version: 1.4.2
+ * Version: 1.4.7
  * Author: Positie1 / Cees-Jan Slabbekoorn
  * Text Domain: wc-footer-logos
  */
